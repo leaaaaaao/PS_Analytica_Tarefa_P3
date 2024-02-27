@@ -72,3 +72,8 @@ No caso de uma requisição correta, o retorno também será um JSON, com o form
 ```
 
 Onde "Nome Sobrenome" é o nome passado como parâmetro no body da requisição, _X_ é a idade que alguém nascido em _birthdate_ tem hoje, _DD/MM/YYYY_ é _date_, a data futura passada no body da requisição, e _Y_ é a idade que essa pessoa terá em _date_. Observe que _date_ é passada em um formato (YYYY-MM-DD) e retornada em outro (DD/MM/YYYY).
+
+## Implementação
+Para a rota de municipios, o programa realiza requisições à api de localidades do IBGE, disponível em https://servicodados.ibge.gov.br/api/v1/localidades. Mais especificamente, foram utilizadas as rotas ```/municipios```, para listar todos os municípios, e ```/municipios/{idMunicipio}/subdistritos```, para listar os bairros. Mais informações disponíveis no link.
+
+Já para a rota de idade, utilizei a biblioteca "datetime" do Python para validar e manipular as datas. Optei por não calcular a idade usando subtração de datas, pois o retorno dessa operação nessa biblioteca é uma diferença em dias, tornando difícil calcular a idade com precisão em certos "casos de borda", considerando anos bissextos. Assim, o método usado foi calcular a diferença apenas entre os anos, e depois checar se o aniversário da pessoa nesse ano já passou, ajustando a idade conforme a situação (subtrai-se 1 do resultado encontrado caso o aniversário ainda não tenha chegado).
