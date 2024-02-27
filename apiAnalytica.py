@@ -8,6 +8,12 @@ ordena_ibge = '?orderBy=nome'
 
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return '''<h2>A API está ativa!</h2>
+	<p>Acesse /age ou /municipio-bairros seguindo as instruções do README para
+	utilizá-la</p>'''
+
 @app.post("/age")
 def age():
 	form = getFormData(request)
@@ -19,7 +25,7 @@ def age():
 	idade, idadeFutura = getIdades(aniversario, dataFutura)
 	
 	resposta = {
-		'quote': f'Olá, {nome}! Você tem {idade} anos e em {dataFutura} você terá {idadeFutura} anos.',
+		'quote': f'Olá, {nome}! Você tem {idade} anos e em {dataFutura.strftime("%d/%m/%y")} você terá {idadeFutura} anos.',
 		'ageNow': idade,
 		'ageThen': idadeFutura
 	}
