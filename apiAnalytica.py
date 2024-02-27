@@ -6,6 +6,8 @@ from municipios import getMunicipioId, getBairros
 url_ibge = 'https://servicodados.ibge.gov.br/api/v1/localidades/municipios'
 ordena_ibge = '?orderBy=nome'
 
+BAD_REQUEST = 400
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -39,7 +41,7 @@ def municipio_bairros():
 	resposta['municipio'] = request.args.get('municipio')
 
 	if not resposta['municipio']:
-		return "ERRO: Parâmetro 'municipio' obrigatório"
+		return "ERRO: Parâmetro 'municipio' obrigatório", BAD_REQUEST
 
 	idMunicipio, err = getMunicipioId(resposta['municipio'])
 	if err:

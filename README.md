@@ -25,7 +25,7 @@ Para essa rota, as requisições devem obrigatoriamente conter o seguinte parâm
 municipio=NOME-DO-MUNICIPIO
 ```
 
-Caso não contenha, será retornada uma mensagem de erro alertando isso ao usuário. No caso de uma requisição correta, o retorno deverá ser um JSON no formato:
+Caso não contenha, será retornado o código de status 400 (Bad request), com uma mensagem de erro alertando isso ao usuário. No caso de uma requisição correta, o retorno deverá ter código de status 200 e conter um JSON no formato:
 ```json
 {
     "municipio": "NOME-DO-MUNICIPIO",
@@ -37,10 +37,9 @@ Caso não contenha, será retornada uma mensagem de erro alertando isso ao usuá
     ]
 }
 ```
-Ou uma mensagem informando que o município não foi encontrado na base do IBGE. (O nome deve ser escrito exatamente como registrado na base).
-
 No JSON, _NOME-DO-MUNICIPIO_ é o valor passado no parâmetro _municipio_ e _NOME DO BAIRRO X_ são bairros desse município, segundo a API do IBGE.
 
+Caso o município não seja encontrado na base do IBGE, o código de status retornado será 404 (Not found) (O nome do município deve ser escrito exatamente como registrado na base). Caso a API do IBGE esteja inacessível por algum motivo, o código de status será 503 (Service unavailable). Em ambos os casos, também é retornada uma mensagem de erro detalhando o problema ao usuário.
 
 ### POST
 ```/age```
@@ -59,15 +58,15 @@ Observe que _name_ não precisa ter sobrenome, ou seja, não é obrigatório ter
 "YYYYMMDD"
 "YYYYWWWD"
 ```
-Onde Y é um dígito de 0 a 9 referente ao ano, M ao mês e D ao dia. Já em WWW, o primeiro W seria o caracter 'W' literal, e os demais, o número de semanas passadas desde o início do ano. Além disso, _date_ deve ser uma data futura. No caso de alguma das regras ser desrespeitadas, é retornada uma mensagem de erro descrevendo o problema.
+Onde Y é um dígito de 0 a 9 referente ao ano, M ao mês e D ao dia. Já em WWW, o primeiro W seria o caracter 'W' literal, e os demais, o número de semanas passadas desde o início do ano. Além disso, _date_ deve ser uma data futura. No caso de alguma das regras ser desrespeitadas, é retornado o código de status 400 (Bad request) e uma mensagem de erro descrevendo o problema.
 
 
 No caso de uma requisição correta, o retorno também será um JSON, com o formato:
 ```json
 {
-    quote: "Olá, Nome Sobrenome! Você tem X anos e em DD/MM/YYYY você terá Y anos.",
-    ageNow: X,
-    ageThen: Y
+    "quote": "Olá, Nome Sobrenome! Você tem X anos e em DD/MM/YYYY você terá Y anos.",
+    "ageNow": X,
+    "ageThen": Y
 }
 ```
 
