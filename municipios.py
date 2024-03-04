@@ -7,9 +7,6 @@ BAD_REQUEST = 400
 NOT_FOUND = 404
 SERVICE_UNAVAILABLE = 503
 
-# Retorna uma tupla, (idMunicipio, err), onde err é uma string que descreve
-# o erro que ocorreu na execução, ou None, caso não haja nenhum
-# TODO passar isso pro README
 def getMunicipioId(nomeMunicipio):
     try:
         municipios = requests.get(url_ibge)
@@ -28,9 +25,6 @@ def getMunicipioId(nomeMunicipio):
     
     return municipioEncontrado['id'], None
 
-# Retorna uma tupla (nomesBairros, err), onde err é uma string que descreve
-# o erro que ocorreu na execução, ou None, caso não tenha ocorrido nenhum
-# TODO passar isso pro README
 def getBairros(municipioId):
     bairros = []
     nomesBairros = []

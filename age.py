@@ -8,17 +8,17 @@ def getFormData(request):
     dataFutura = request.form.get('date')
 
     if not nome or not dataFutura or not aniversario:
-        return {'erro': ('Erro: Esperados três parâmetros. (Nome, data de nascimento e uma data futura)', BAD_REQUEST)} # TODO detalhar
+        return {'erro': ('Erro: Esperados três parâmetros. (Nome, data de nascimento e uma data futura. Consulte o README para mais detalhes sobre a formatação.)', BAD_REQUEST)}
 
     try:
         aniversario = date.fromisoformat(aniversario)
         dataFutura = date.fromisoformat(dataFutura)
     except:
-        return {'erro': ('Erro: Formato das datas inválido', BAD_REQUEST)} # TODO detalhar
+        return {'erro': ('Erro: Formato das datas inválido. As datas devem seguir o padrão ISO 8601. Mais detalhes no README.', BAD_REQUEST)}
 
     hoje = date.today()
     if dataFutura < hoje:
-        return {'erro': ('Erro: \'date\' deve ser uma data no futuro', BAD_REQUEST)} # TODO detalhar
+        return {'erro': ('Erro: \'date\' deve ser uma data no futuro.', BAD_REQUEST)}
 
     return {'nome': nome, 'aniversario': aniversario, 'dataFutura': dataFutura}
 
